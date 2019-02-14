@@ -3,27 +3,20 @@
     ViewData["Title"] = "Contact";
 }
 
-
 <address>
-    地址：河北省保定市清苑区<br />
+    地址：河北省保定市清苑区北店乡<br />
     联系人：杨先生<br />
     电话：151 3245 6500<br />
 </address>
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="百度地图,百度地图API，百度地图自定义工具，百度地图所见即所得工具" />
-    <meta name="description" content="百度地图API自定义地图，帮助用户在可视化操作下生成百度地图" />
-    <title>百度地图API自定义地图</title>
-    <!--引用百度地图API-->
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=N0BB4AFuUgfdQZ4Ce6HVWXLR5Z1h4HPl"></script>
-</head>
+<!--引用百度地图API-->
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=YecMWRi0hVGeeUZ0hmPyTILbmHxMA954"></script>
+
 
 <body>
     <!--百度地图容器-->
-    <div style="width:700px;height:550px;border:#ccc solid 1px;font-size:12px" id="map"></div>
+    <div style="width:600px;height:328px;border:#ccc solid 1px;font-size:12px" id="map"></div>
 </body>
 <script type="text/javascript">
     //创建和初始化地图函数：
@@ -35,7 +28,7 @@
     }
     function createMap() {
         map = new BMap.Map("map");
-        map.centerAndZoom(new BMap.Point(115.487262, 38.709764), 15);
+        map.centerAndZoom(new BMap.Point(115.483802, 38.703671), 15);
     }
     function setMapEvent() {
         map.enableScrollWheelZoom();
@@ -84,4 +77,3 @@
     var map;
     initMap();
 </script>
-</html>
