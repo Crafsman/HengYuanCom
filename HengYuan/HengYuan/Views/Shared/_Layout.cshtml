@@ -51,7 +51,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact"><font size="5">联系我们</font></a>
                         </li>
                     </ul>
-                    <partial name="_LoginPartial" />
+
                 </div>
             </div>
         </nav>
@@ -66,7 +66,9 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
+        <partial name="_Footer" />
+        <!--
+                    <footer>
             <p>
                 版权与免责声明：<br />
                 1. 本网凡注明“稿件来源:本网原创”的所有作品。转载请必须同时注明本网名称及链接。<br />
@@ -74,6 +76,8 @@
                 3. 本网部分内容转载自其他媒体，目的在于传递更多信息，并不代表本网赞同其观点或证实其内容的真实性。不承担此类作品侵权行为的直接责任及连带责任。
             </p>
         </footer>
+        -->
+
     </div>
 
     <environment include="Development">
