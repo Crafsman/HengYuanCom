@@ -30,7 +30,6 @@
 <body>
     <header>
 
-
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/logo.png" alt=""></a>
@@ -38,7 +37,6 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
@@ -53,12 +51,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact"><font size="5">联系我们</font></a>
                         </li>
                     </ul>
+                    <partial name="_LoginPartial" />
                 </div>
-
             </div>
-
         </nav>
-
 
     </header>
     <div class="container">
@@ -67,11 +63,9 @@
             @RenderBody()
         </main>
     </div>
-
     <div class="container body-content">
         @RenderBody()
         <hr />
-
         <footer>
             <p>
                 版权与免责声明：<br />
@@ -81,7 +75,6 @@
             </p>
         </footer>
     </div>
-
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -116,7 +109,6 @@
             s.parentNode.insertBefore(bp, s);
         })();
     </script>
-
 
     @RenderSection("Scripts", required: false)
 </body>

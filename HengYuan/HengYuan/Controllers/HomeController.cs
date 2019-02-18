@@ -8,16 +8,20 @@ using HengYuan.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace HengYuan.Controllers
 {
     public class HomeController : Controller
     {
 
+        private IHttpContextAccessor _accessor;
         private readonly IHostingEnvironment _hostingEnvironment;
-        public HomeController(IHostingEnvironment hostingEnvironment)
+        public HomeController(IHostingEnvironment hostingEnvironment, IHttpContextAccessor accessor)
         {
             _hostingEnvironment = hostingEnvironment;
+            _accessor = accessor;
+
         }
         public IActionResult Index()
         {
@@ -34,7 +38,8 @@ namespace HengYuan.Controllers
                 myImage.Path = Path.GetFileName(item);
                 images.Add(myImage);
             }
-
+            string ip = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            ViewData["IPAddress"] = ip;
             ViewData["image"] = Path.GetFileName(array1[0]);
             return View(images);
         }
