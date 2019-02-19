@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using HengYuan.Data;
+using System.Net;
 
 namespace HengYuan.Controllers
 {
@@ -16,14 +18,19 @@ namespace HengYuan.Controllers
     {
 
         private IHttpContextAccessor _accessor;
+        private readonly AppDbContext _appDbContext;
         private readonly IHostingEnvironment _hostingEnvironment;
-        public HomeController(IHostingEnvironment hostingEnvironment, IHttpContextAccessor accessor)
+        public HomeController(IHostingEnvironment hostingEnvironment,
+            IHttpContextAccessor accessor,
+            AppDbContext appDbcontext
+            )
         {
             _hostingEnvironment = hostingEnvironment;
             _accessor = accessor;
-
+            _appDbContext = appDbcontext;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
             // Get all image paths from wwwroot/products 
             string webRootPath = _hostingEnvironment.WebRootPath;
@@ -41,6 +48,24 @@ namespace HengYuan.Controllers
             string ip = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             ViewData["IPAddress"] = ip;
             ViewData["image"] = Path.GetFileName(array1[0]);
+
+            Visitor visitor = new Visitor
+            {
+                IPAddress = ip,
+
+            };
+
+
+            // Not save the same IP witin 30mins 
+            // Save it to when disconnect the website   Response.IsClientConnected
+            _appDbContext.Visitors.Add(visitor);
+            await _appDbContext.SaveChangesAsync();
+            if (HttpContext.RequestAborted.IsCancellationRequested == true)
+            {
+                //
+            }
+
+
             return View(images);
         }
 

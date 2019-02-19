@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace HengYuan.Migrations
+namespace HengYuan.Migrations.HengYuan
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class updateIdentity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

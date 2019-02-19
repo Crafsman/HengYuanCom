@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using HengYuan.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace HengYuan.Controllers
 {
@@ -13,7 +17,28 @@ namespace HengYuan.Controllers
         public ActionResult Index()
         {
             return View();
+
+            // Frome database get IPaddress and present to dashboard
         }
+
+        public static string GetUserCountryByIp(string ip)
+        {
+            IpInfo ipInfo = new IpInfo();
+            try
+            {
+                string info = new WebClient().DownloadString("http://ipinfo.io/" + ip);
+                ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);
+                RegionInfo myRI1 = new RegionInfo(ipInfo.Country);
+                ipInfo.Country = myRI1.EnglishName;
+            }
+            catch (Exception)
+            {
+                ipInfo.Country = null;
+            }
+
+            return ipInfo.Country;
+        }
+
 
         // GET: DashBoard/Details/5
         public ActionResult Details(int id)

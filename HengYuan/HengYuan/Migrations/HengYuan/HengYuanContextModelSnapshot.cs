@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace HengYuan.Migrations
+namespace HengYuan.Migrations.HengYuan
 {
     [DbContext(typeof(HengYuanContext))]
     partial class HengYuanContextModelSnapshot : ModelSnapshot

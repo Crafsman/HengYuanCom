@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace HengYuan.Migrations
+namespace HengYuan.Migrations.HengYuan
 {
     [DbContext(typeof(HengYuanContext))]
-    [Migration("20190218033843_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [Migration("20190219070401_updateIdentity")]
+    partial class updateIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
