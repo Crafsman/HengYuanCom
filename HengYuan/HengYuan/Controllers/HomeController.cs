@@ -11,6 +11,7 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using HengYuan.Data;
 using System.Net;
+using HengYuan.Data.Repository;
 
 namespace HengYuan.Controllers
 {
@@ -18,16 +19,16 @@ namespace HengYuan.Controllers
     {
 
         private IHttpContextAccessor _accessor;
-        private readonly AppDbContext _appDbContext;
+        private readonly IRepository _repo;
         private readonly IHostingEnvironment _hostingEnvironment;
         public HomeController(IHostingEnvironment hostingEnvironment,
             IHttpContextAccessor accessor,
-            AppDbContext appDbcontext
+            IRepository repo
             )
         {
             _hostingEnvironment = hostingEnvironment;
             _accessor = accessor;
-            _appDbContext = appDbcontext;
+            _repo = repo;
         }
 
         public async Task<IActionResult> Index()
@@ -41,32 +42,45 @@ namespace HengYuan.Controllers
             List<MyImage> images = new List<MyImage>();
             foreach (var item in array1)
             {
-                MyImage myImage = new MyImage();
-                myImage.Path = Path.GetFileName(item);
+                MyImage myImage = new MyImage
+                {
+                    Path = Path.GetFileName(item)
+                };
                 images.Add(myImage);
             }
+
+            await RecordVisitor();
+            return View(images);
+        }
+        public async Task<bool> RecordVisitor()
+        {
             string ip = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             ViewData["IPAddress"] = ip;
-            ViewData["image"] = Path.GetFileName(array1[0]);
 
-            Visitor visitor = new Visitor
+            var vi = _repo.GetVisitor(ip);
+            if (vi == null)
             {
-                IPAddress = ip,
-
-            };
-
-
-            // Not save the same IP witin 30mins 
-            // Save it to when disconnect the website   Response.IsClientConnected
-            _appDbContext.Visitors.Add(visitor);
-            await _appDbContext.SaveChangesAsync();
-            if (HttpContext.RequestAborted.IsCancellationRequested == true)
-            {
-                //
+                Visitor newVisitor = new Visitor
+                {
+                    IPAddress = ip,
+                };
+                _repo.AddVisitor(newVisitor);
+                await _repo.SaveChangesAsync();
             }
+            else
+            {
+                int result = vi.VisitTime.CompareTo(vi.VisitTime.AddMinutes(30));
+                if (result > 0)
+                {
+                    // Update visit time +1
+                    vi.VisitTimes += 1;
+                    _repo.UpdateVisitor(vi);
+                    await _repo.SaveChangesAsync();
+                }
+            }
+            // Not save the same IP witin 30mins 
 
-
-            return View(images);
+            return true;
         }
 
         public IActionResult Privacy()

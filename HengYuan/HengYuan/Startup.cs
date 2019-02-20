@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HengYuan.Data;
+using HengYuan.Data.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -28,8 +29,8 @@ namespace HengYuan
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add detection services container and device resolver service.
 
+            services.AddTransient<IRepository, Repository>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {

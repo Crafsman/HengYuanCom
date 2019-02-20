@@ -12,7 +12,8 @@ namespace HengYuan.Models
         public int Id { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime VisitTime { get; set; } = DateTime.UtcNow;
+        public DateTime VisitTime { get; set; } = DateTime.UtcNow.ToLocalTime();
         public string IPAddress { get; set; }
+        public int VisitTimes { get; set; } = 1;
     }
 }
