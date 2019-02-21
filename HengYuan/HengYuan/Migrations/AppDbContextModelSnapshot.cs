@@ -25,9 +25,17 @@ namespace HengYuan.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("City");
+
+                    b.Property<string>("Country");
+
                     b.Property<string>("IPAddress");
 
-                    b.Property<DateTime>("VisitTime");
+                    b.Property<float>("Latitude");
+
+                    b.Property<float>("Longtitude");
+
+                    b.Property<DateTime>("RecentVisitTime");
 
                     b.Property<int>("VisitTimes");
 

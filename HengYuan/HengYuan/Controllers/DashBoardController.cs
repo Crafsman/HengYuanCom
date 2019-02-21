@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using HengYuan.Data.Repository;
 using HengYuan.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,30 +14,45 @@ namespace HengYuan.Controllers
 {
     public class DashBoardController : Controller
     {
+        private readonly IRepository _repo;
+
+        public DashBoardController(IRepository repo)
+        {
+            _repo = repo;
+        }
         // GET: DashBoard
         public ActionResult Index()
         {
-            return View();
-
             // Frome database get IPaddress and present to dashboard
+            List<Visitor> visitors = _repo.GetAllVisitors();
+
+            return View(visitors);
+
         }
 
+        public ActionResult Map()
+        {
+            // Frome database get IPaddress and present to dashboard
+
+            return View();
+
+        }
         public static string GetUserCountryByIp(string ip)
         {
             IpInfo ipInfo = new IpInfo();
             try
             {
-                string info = new WebClient().DownloadString("http://ipinfo.io/" + ip);
+                string info = new WebClient().DownloadString("http://api.ipstack.com/" + ip + "?access_key=3d8b4b81ee9fa77ef95b73822a4c09d5&format=1");
                 ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);
-                RegionInfo myRI1 = new RegionInfo(ipInfo.Country);
-                ipInfo.Country = myRI1.EnglishName;
+                RegionInfo myRI1 = new RegionInfo(ipInfo.Country_name);
+                ipInfo.Country_name = myRI1.EnglishName;
             }
             catch (Exception)
             {
-                ipInfo.Country = null;
+                ipInfo.Country_name = null;
             }
 
-            return ipInfo.Country;
+            return ipInfo.Country_name;
         }
 
 

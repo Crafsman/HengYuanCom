@@ -44,7 +44,7 @@ namespace HengYuan.Data.Repository
 
         public void UpdateVisitor(Visitor visitor)
         {
-            throw new NotImplementedException();
+            _ctx.Visitors.Update(visitor);
         }
     }
 }

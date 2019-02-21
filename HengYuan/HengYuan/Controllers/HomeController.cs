@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Http;
 using HengYuan.Data;
 using System.Net;
 using HengYuan.Data.Repository;
+using Newtonsoft.Json;
+using System.Globalization;
 
 namespace HengYuan.Controllers
 {
@@ -52,28 +54,48 @@ namespace HengYuan.Controllers
             await RecordVisitor();
             return View(images);
         }
+
+
         public async Task<bool> RecordVisitor()
         {
             string ip = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
-            ViewData["IPAddress"] = ip;
 
             var vi = _repo.GetVisitor(ip);
             if (vi == null)
             {
+
+                IpInfo ipInfo = new IpInfo();
+                try
+                {
+                    string info = new WebClient().DownloadString("http://api.ipstack.com/" + ip + "?access_key=3d8b4b81ee9fa77ef95b73822a4c09d5&format=1");
+                    ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);
+
+                }
+                catch (Exception)
+                {
+                    ipInfo.Country_name = null;
+                }
+
                 Visitor newVisitor = new Visitor
                 {
                     IPAddress = ip,
+                    Country = ipInfo.Country_name,
+                    City = ipInfo.City,
+                    Longtitude = ipInfo.Longitude,
+                    Latitude = ipInfo.Latitude
                 };
                 _repo.AddVisitor(newVisitor);
                 await _repo.SaveChangesAsync();
             }
             else
             {
-                int result = vi.VisitTime.CompareTo(vi.VisitTime.AddMinutes(30));
+                DateTime currentTime = DateTime.Now.ToLocalTime();
+                int result = currentTime.CompareTo(vi.RecentVisitTime.AddMinutes(30));
                 if (result > 0)
                 {
                     // Update visit time +1
                     vi.VisitTimes += 1;
+                    vi.RecentVisitTime = currentTime;
                     _repo.UpdateVisitor(vi);
                     await _repo.SaveChangesAsync();
                 }

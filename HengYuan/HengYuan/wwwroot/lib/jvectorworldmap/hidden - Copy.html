@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Maps</title>
+  <link rel="stylesheet" media="all" href="jquery-jvectormap.css"/>
+
+  <script src="assets/jquery-1.8.2.js"></script>
+  <script src="jquery-jvectormap.js"></script>
+  <script src="lib/jquery-mousewheel.js"></script>
+
+  <script src="src/jvectormap.js"></script>
+
+  <script src="src/abstract-element.js"></script>
+  <script src="src/abstract-canvas-element.js"></script>
+  <script src="src/abstract-shape-element.js"></script>
+
+  <script src="src/svg-element.js"></script>
+  <script src="src/svg-group-element.js"></script>
+  <script src="src/svg-canvas-element.js"></script>
+  <script src="src/svg-shape-element.js"></script>
+  <script src="src/svg-path-element.js"></script>
+  <script src="src/svg-circle-element.js"></script>
+
+  <script src="src/vml-element.js"></script>
+  <script src="src/vml-group-element.js"></script>
+  <script src="src/vml-canvas-element.js"></script>
+  <script src="src/vml-shape-element.js"></script>
+  <script src="src/vml-path-element.js"></script>
+  <script src="src/vml-circle-element.js"></script>
+
+  <script src="src/map-object.js"></script>
+  <script src="src/region.js"></script>
+  <script src="src/marker.js"></script>
+
+  <script src="src/vector-canvas.js"></script>
+  <script src="src/simple-scale.js"></script>
+  <script src="src/ordinal-scale.js"></script>
+  <script src="src/numeric-scale.js"></script>
+  <script src="src/color-scale.js"></script>
+  <script src="src/data-series.js"></script>
+  <script src="src/proj.js"></script>
+  <script src="src/map.js"></script>
+
+
+  <script src="assets/jquery-jvectormap-world-mill-en.js"></script>
+  <script>
+    $(function(){
+      var map = new jvm.Map({
+        container: $('.map'),
+        map: 'world_mill_en',
+		   markerStyle: {
+      initial: {
+        fill: '#F8E23B',
+        stroke: '#383f47'
+      }
+    },
+		 backgroundColor: '#383f47',
+		markers: [
+      {latLng: [41.90, 12.45], name: 'Vatican City'},
+      {latLng: [43.73, 7.41], name: 'Monaco'},
+      {latLng: [-0.52, 166.93], name: 'Nauru'},
+      {latLng: [-8.51, 179.21], name: 'Tuvalu'},
+      {latLng: [43.93, 12.46], name: 'San Marino'},
+      {latLng: [47.14, 9.52], name: 'Liechtenstein'},
+      {latLng: [7.11, 171.06], name: 'Marshall Islands'},
+      {latLng: [17.3, -62.73], name: 'Saint Kitts and Nevis'},
+      {latLng: [3.2, 73.22], name: 'Maldives'},
+      {latLng: [-33.86, 151.19], name: 'Sydney'},
+
+    ],
+      });
+
+
+    });
+  </script>
+</head>
+<body>
+  <div class="map" style=" width: 800px; height: 500px"></div>
+</body>
+</html>
