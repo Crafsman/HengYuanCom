@@ -33,7 +33,7 @@ namespace HengYuan.Controllers
             _repo = repo;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             // Get all image paths from wwwroot/products 
             string webRootPath = _hostingEnvironment.WebRootPath;
@@ -51,7 +51,7 @@ namespace HengYuan.Controllers
                 images.Add(myImage);
             }
 
-            await RecordVisitor();
+            //await RecordVisitor();
             return View(images);
         }
 
